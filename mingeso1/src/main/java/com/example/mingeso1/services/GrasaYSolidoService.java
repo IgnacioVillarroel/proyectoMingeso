@@ -64,7 +64,7 @@ public class GrasaYSolidoService {
                     count = 0;
                 }
                 else{
-                    guardarDataDB(bfRead.split(";")[0], bfRead.split(";")[1], bfRead.split(";")[2]);
+                    guardarDataDB(bfRead.split(";")[0], Integer.parseInt(bfRead.split(";")[1]), Integer.parseInt(bfRead.split(";")[2]));
                     temp = temp + "\n" + bfRead;
                 }
             }
@@ -87,11 +87,51 @@ public class GrasaYSolidoService {
         grasaSolidoRepository.save(grasaSolido);
     }
 
-    public void guardarDataDB(String proveedor, String grasa, String solido){
+    public void guardarDataDB(String proveedor, Integer grasa, Integer solido){
         GrasaYSolidoEntity newData = new GrasaYSolidoEntity();
         newData.setProveedor(proveedor);
         newData.setGrasa(grasa);
         newData.setSolido(solido);
         guardarData(newData);
+    }
+
+    //eliminar todos los datos
+    public void eliminarGS(){
+        grasaSolidoRepository.deleteAll();
+    }
+
+    public GrasaYSolidoEntity obtenerGSPorProveedor(String proveedor){
+        return grasaSolidoRepository.findGSByProveedor(proveedor);
+    }
+
+    //obtener grasa de proveedor
+    public double obtenerGrasa(String proveedor){
+        return obtenerGSPorProveedor(proveedor).getGrasa();
+    }
+
+    public double pagoPorGrasa(double grasa, double kilos){
+        if(grasa >= 0 && grasa <= 20){
+            return kilos * 30;
+        }else if(grasa >= 21 && grasa <= 45){
+            return kilos * 80;
+        }else{
+            return kilos * 120;
+        }
+    }
+
+    public double obtenerST(String proveedor){
+        return obtenerGSPorProveedor(proveedor).getSolido();
+    }
+
+    public double pagoPorST(double st, double kilos){
+        if(st >= 0 && st <= 7){
+            return kilos * -130;
+        }else if(st >= 8 && st <= 18){
+            return kilos * -90;
+        }else if(st >= 19 && st <= 35){
+            return kilos * 95;
+        }else{
+            return kilos * 150;
+        }
     }
 }

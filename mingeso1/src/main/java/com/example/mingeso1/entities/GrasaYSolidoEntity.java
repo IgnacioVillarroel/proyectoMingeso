@@ -17,6 +17,6 @@ public class GrasaYSolidoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_gs;
     private String proveedor;
-    private String grasa;
-    private String solido;
+    private Integer grasa;
+    private Integer solido;
 }
