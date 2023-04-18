@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,9 +36,16 @@ public class PagoController {
     @Autowired
     private GrasaYSolidoService grasaSolidoService;
 
-    /* @GetMapping("/calcular")
+    @GetMapping("/listarPagos")
+    public String listar(Model model) {
+        ArrayList<PagoEntity> pagos = pagoService.obtenerPagos();
+        model.addAttribute("pagos", pagos);
+        return "pagos";
+    }
+
+    @GetMapping("/calcular")
     public String calcular(){
-        pagoService.eliminarPagos();
+        //pagoService.eliminarPagos();
         ArrayList<ProveedorEntity> proveedores = proveedorService.obtenerProveedores();
         for(ProveedorEntity proveedor:proveedores){
             String codigo = proveedor.getCodigo();
@@ -94,10 +102,10 @@ public class PagoController {
             pago.setMonto_final(pagoFinal);
             pagoService.guardarPago(pago);
         }
-        return "redirect:/";
-    } */
+        return "redirect:/listarPagos";
+    }
 
-    @GetMapping("/calcular")
+    /* @GetMapping("/calcular")
     public ResponseEntity<List<PagoEntity>> calcular(){
         //pagoService.eliminarPagos();
         List<ProveedorEntity> proveedores = proveedorService.obtenerProveedores();
@@ -158,7 +166,7 @@ public class PagoController {
         }
         List<PagoEntity> pagos = pagoService.obtenerPagos();
         return new ResponseEntity<>(pagos, HttpStatus.OK);
-    }
+    } */
 
 
 
