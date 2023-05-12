@@ -18,23 +18,24 @@ public class ProveedorController {
     @Autowired
     private ProveedorService proveedorService;
 
-    @GetMapping("/lista-proveedores")
+    @GetMapping("/listProveedores")
     public String listar(Model model) {
         ArrayList<ProveedorEntity> proveedores = proveedorService.obtenerProveedores();
         model.addAttribute("proveedores", proveedores);
         return "index";
     }
 
-    @GetMapping("/nuevo-proveedor")
+    @GetMapping("/nuevoproveedor")
     public String proveedor(){
-        return "nuevo-proveedor";
+        return "nuevoproveedor";
     }
-    @PostMapping("/nuevo-proveedor")
+
+    @PostMapping("/nuevoproveedor")
     public String nuevoProveedor(@RequestParam("codigo") String codigo,
                                  @RequestParam("nombre") String nombre,
                                  @RequestParam("categoria") String categoria,
                                  @RequestParam("retencion") String retencion){
         proveedorService.guardarProveedor(codigo, nombre, categoria, retencion);
-        return "redirect:/nuevo-proveedor";
+        return "redirect:/listProveedores";
     }
 }

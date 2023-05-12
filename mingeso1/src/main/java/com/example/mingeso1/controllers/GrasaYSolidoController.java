@@ -21,25 +21,25 @@ public class GrasaYSolidoController {
     @Autowired
     private GrasaYSolidoService grasaSolido;
 
-    @GetMapping("/fileUpload_grasa")
+    @GetMapping("/cargarGrasa")
     public String main() {
-        return "fileUpload_grasa";
+        return "uploadGrasaSolido";
     }
 
-    @PostMapping("/fileUpload_grasa")
+    @PostMapping("/cargarGrasa")
     public String upload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
         grasaSolido.eliminarGS();
         grasaSolido.guardarGS(file);
         String filename = file.getOriginalFilename();
         redirectAttributes.addFlashAttribute("mensaje", "Archivo cargado con éxito");
         grasaSolido.leerCsv(filename);
-        return "redirect:/fileUpload_grasa";
+        return "redirect:/cargarGrasa";
     }
 
-    @GetMapping("/fileInformation_grasa")
+    @GetMapping("/listGrasa")
     public String listar(Model model) {
         ArrayList<GrasaYSolidoEntity> grasaSolidos = grasaSolido.obtenerGS();
         model.addAttribute("grasaSolidos", grasaSolidos);
-        return "fileInformation_grasa";
+        return "listGrasaSolido";
     }
 }

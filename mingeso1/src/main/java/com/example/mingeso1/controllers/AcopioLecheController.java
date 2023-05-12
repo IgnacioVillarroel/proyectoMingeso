@@ -20,25 +20,25 @@ public class AcopioLecheController {
     @Autowired
     private AcopioLecheService acopioLeche;
 
-    @GetMapping("/fileUpload")
+    @GetMapping("/cargarAcopio")
     public String main() {
-        return "fileUpload";
+        return "uploadAcopio";
     }
 
-    @PostMapping("/fileUpload")
+    @PostMapping("/cargarAcopio")
     public String upload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
         acopioLeche.eliminarAcopios();
         acopioLeche.guardarAcopio(file);
         String filename = file.getOriginalFilename();
         redirectAttributes.addFlashAttribute("mensaje", "Archivo cargado con éxito");
         acopioLeche.leerCsv(filename);
-        return "redirect:/fileUpload";
+        return "redirect:/cargarAcopio";
     }
 
-    @GetMapping("/fileInformation")
+    @GetMapping("/listAcopio")
     public String listar(Model model) {
         ArrayList<AcopioLecheEntity> acopioLeches = acopioLeche.obtenerAcopio();
         model.addAttribute("acopioLeches", acopioLeches);
-        return "fileInformation";
+        return "listAcopio";
     }
 }

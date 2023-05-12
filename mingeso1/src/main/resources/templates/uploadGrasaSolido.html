@@ -52,11 +52,11 @@
   <nav>
   </nav>
   <a class="btn" href="/"><button>Volver al menú principal</button></a>
-  <a class="btn-2" href="/fileInformation_grasa"><button>Ver el último archivo cargado</button></a>
+  <a class="btn-2" href="/listGrasa"><button>Ver el último archivo cargado</button></a>
 </header>
 <div class = "container" align = "center">
   <h1><b>Subir archivo de Grasa y Solidos</b></h1>
-  <form  th:action="@{/fileUpload_grasa}" method="POST" enctype="multipart/form-data">
+  <form  th:action="@{/cargarGrasa}" method="POST" enctype="multipart/form-data">
     <br>
     <input align = "center" type="file" class="form-control" name="file" accept = ".csv">
     <br>

@@ -1,10 +1,10 @@
 package com.example.mingeso1.controllers;
 
 import com.example.mingeso1.entities.AcopioLecheEntity;
+import com.example.mingeso1.entities.GrasaYSolidoEntity;
 import com.example.mingeso1.entities.PagoEntity;
 import com.example.mingeso1.entities.ProveedorEntity;
 import com.example.mingeso1.services.AcopioLecheService;
-import com.example.mingeso1.services.GrasaYSolidoService;
 import com.example.mingeso1.services.GrasaYSolidoService;
 import com.example.mingeso1.services.PagoService;
 import com.example.mingeso1.services.ProveedorService;
@@ -36,14 +36,14 @@ public class PagoController {
     @Autowired
     private GrasaYSolidoService grasaSolidoService;
 
-    @GetMapping("/listarPagos")
+    @GetMapping("/listaDePagos")
     public String listar(Model model) {
         ArrayList<PagoEntity> pagos = pagoService.obtenerPagos();
-        model.addAttribute("pagos", pagos);
-        return "pagos";
+        model.addAttribute("planillaPago", pagos);
+        return "planillaPago";
     }
 
-    @GetMapping("/calcular")
+    /* @GetMapping("/pago")
     public String calcular(){
         //pagoService.eliminarPagos();
         ArrayList<ProveedorEntity> proveedores = proveedorService.obtenerProveedores();
@@ -102,10 +102,11 @@ public class PagoController {
             pago.setMonto_final(pagoFinal);
             pagoService.guardarPago(pago);
         }
-        return "redirect:/listarPagos";
-    }
+        return "redirect:/listaDePagos";
+    } */
 
-    /* @GetMapping("/calcular")
+
+    @GetMapping("/pago")
     public ResponseEntity<List<PagoEntity>> calcular(){
         //pagoService.eliminarPagos();
         List<ProveedorEntity> proveedores = proveedorService.obtenerProveedores();
@@ -115,12 +116,29 @@ public class PagoController {
             PagoEntity pago = new PagoEntity(null, "", codigo, proveedor.getNombre_proveedor(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
             double kls_leche = acopioLecheService.sumarKls(codigo);
             double klsPorCategoria = acopioLecheService.klsPorCategoria(categoria, kls_leche);
-            double grasa = grasaSolidoService.obtenerGrasa(codigo);
-            double pagoGrasa = grasaSolidoService.pagoPorGrasa(grasa, kls_leche);
-            double st = grasaSolidoService.obtenerST(codigo);
-            double pagoST = grasaSolidoService.pagoPorST(st, kls_leche);
+            GrasaYSolidoEntity gs = grasaSolidoService.obtenerGSPorProveedor(codigo);
+            double pagoGrasa;
+            double grasa = 0.0;
+            double st;
+            double pagoST;
+            if(gs == null){
+                //GrasaSolidoEntity newGS = new GrasaSolidoEntity(null,codigo,0,0);
+                pagoGrasa = grasaSolidoService.pagoPorGrasa(0.0, kls_leche);
+                st = 0.0;
+                pagoST = 0.0;
+
+            }else{
+                grasa = grasaSolidoService.obtenerGrasa(gs);
+                pagoGrasa = grasaSolidoService.pagoPorGrasa(grasa, kls_leche);
+                st = grasaSolidoService.obtenerST(gs);
+                pagoST = grasaSolidoService.pagoPorST(st, kls_leche);
+            }
+            //double grasa = grasaSolidoService.obtenerGrasa(codigo);
+            //double pagoGrasa = grasaSolidoService.pagoPorGrasa(grasa, kls_leche);
+            //double st = grasaSolidoService.obtenerST(codigo);
+            //double pagoST = grasaSolidoService.pagoPorST(st, kls_leche);
             double bono = acopioLecheService.bonoFrecuencia(codigo, kls_leche);
-            double pagoAcopioLeche = klsPorCategoria + pagoGrasa + pagoST + bono;
+            //double pagoAcopioLeche = klsPorCategoria + pagoGrasa + pagoST + bono;
 
             String quincena = acopioLecheService.obtenerQuincena(codigo);
             //ArrayList<PagoEntity> pagosProveedor = pagoService.obtenerPagosByCodigoProveedor(codigo);
@@ -129,44 +147,46 @@ public class PagoController {
             int variacionLeche = pagoService.variacionLeche(totalKlsUltimoPago, kls_leche);
             double descuentoLeche = kls_leche * (variacionLeche / 100.0);
             double grasaUltimoPago = pagoService.obtenerGrasa(ultimoPago);
-            int variacionGrasa = pagoService.variacionGrasa(grasaUltimoPago, grasa);
-            double descuentoGrasa = grasa * (variacionGrasa / 100.0);
+            //int variacionGrasa = pagoService.variacionGrasa(grasaUltimoPago, grasa);
+            //double descuentoGrasa = grasa * (variacionGrasa / 100.0);
             double stUltimoPago = pagoService.obtenerSt(ultimoPago);
-            int variacionSt = pagoService.variacionSt(stUltimoPago, st);
-            double descuentoSt = st * (variacionSt / 100.0);
-            double descuentos = descuentoLeche + descuentoGrasa + descuentoSt;
-            double pagoTotal = pagoAcopioLeche - descuentos;
+            //int variacionSt = pagoService.variacionSt(stUltimoPago, st);
+            //double descuentoSt = st * (variacionSt / 100.0);
+            //double descuentos = descuentoLeche + descuentoGrasa + descuentoSt;
+            //double pagoTotal = pagoAcopioLeche - descuentos;
 
             double retencion = 0.0;
-            if(pagoTotal >= 950000){
-                retencion = pagoTotal * 0.13;
-            }
-            double pagoFinal = pagoTotal - retencion;
+            //if(pagoTotal >= 950000){
+            //    retencion = pagoTotal * 0.13;
+            //}
+            //double pagoFinal = pagoTotal - retencion;
+
+            pago.setTotal_kls(kls_leche);
+            pago.setPago_leche(klsPorCategoria);
+            pago.setGrasa(grasa);
+            //pago.setPago_grasa(pagoGrasa);
+            //pago.setPago_st(pagoST);
+            pago.setBono(bono);
 
             pago.setQuincena(quincena);
-            pago.setTotal_kls(kls_leche);
+            pago.setVariacion_leche(variacionLeche);
+            pago.setDcto_leche(descuentoLeche);
+            //pago.setVariacion_grasa(variacionGrasa);
+            //pago.setDcto_grasa(descuentoGrasa);
+            //pago.setVariacion_st(variacionSt);
+            //pago.setDcto_st(descuentoSt);
+
             pago.setDias(acopioLecheService.cantidadDias(codigo));
             pago.setPromedio_kls(acopioLecheService.promedioKls(codigo));
-            pago.setVariacion_leche(variacionLeche);
-            pago.setGrasa(grasa);
-            pago.setVariacion_grasa(variacionGrasa);
             pago.setSolidos_totales(st);
-            pago.setVariacion_st(variacionSt);
-            pago.setPago_leche(klsPorCategoria);
-            pago.setPago_grasa(pagoGrasa);
-            pago.setPago_st(pagoST);
-            pago.setBono(bono);
-            pago.setDcto_leche(descuentoLeche);
-            pago.setDcto_grasa(descuentoGrasa);
-            pago.setDcto_st(descuentoSt);
-            pago.setTotal(pagoTotal);
+            //pago.setTotal(pagoTotal);
             pago.setMonto_retencion(retencion);
-            pago.setMonto_final(pagoFinal);
+            //pago.setMonto_final(pagoFinal);
             pagoService.guardarPago(pago);
         }
         List<PagoEntity> pagos = pagoService.obtenerPagos();
         return new ResponseEntity<>(pagos, HttpStatus.OK);
-    } */
+    }
 
 
 
@@ -202,4 +222,5 @@ public class PagoController {
         }
         return new ResponseEntity<>(bono, HttpStatus.OK);
     } */
+
 }
