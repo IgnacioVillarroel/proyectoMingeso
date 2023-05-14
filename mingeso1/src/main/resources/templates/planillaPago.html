@@ -53,28 +53,28 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="pagos:${pagos}">
-      <td th:text="${pagos.quincena}"></td>
-      <td th:text="${pagos.codigo_proveedor}"></td>
-      <td th:text="${pagos.nombre_proveedor}"></td>
-      <td th:text="${pagos.total_kls}"></td>
-      <td th:text="${pagos.dias}"></td>
-      <td th:text="${pagos.promedio_kls}"></td>
-      <td th:text="${pagos.variacion_leche}"></td>
-      <td th:text="${pagos.grasa}"></td>
-      <td th:text="${pagos.variacion_grasa}"></td>
-      <td th:text="${pagos.solidos_totales}"></td>
-      <td th:text="${pagos.variacion_st}"></td>
-      <td th:text="${pagos.pago_leche}"></td>
-      <td th:text="${pagos.pago_grasa}"></td>
-      <td th:text="${pagos.pago_st}"></td>
-      <td th:text="${pagos.bono}"></td>
-      <td th:text="${pagos.dcto_leche}"></td>
-      <td th:text="${pagos.dcto_grasa}"></td>
-      <td th:text="${pagos.dcto_st}"></td>
-      <td th:text="${pagos.total}"></td>
-      <td th:text="${pagos.monto_retencion}"></td>
-      <td th:text="${pagos.monto_final}"></td>
+    <tr th:each="planillaPago:${planillaPago}">
+      <td th:text="${planillaPago.quincena}"></td>
+      <td th:text="${planillaPago.codigo_proveedor}"></td>
+      <td th:text="${planillaPago.nombre_proveedor}"></td>
+      <td th:text="${planillaPago.total_kls}"></td>
+      <td th:text="${planillaPago.dias}"></td>
+      <td th:text="${planillaPago.promedio_kls}"></td>
+      <td th:text="${planillaPago.variacion_leche}"></td>
+      <td th:text="${planillaPago.grasa}"></td>
+      <td th:text="${planillaPago.variacion_grasa}"></td>
+      <td th:text="${planillaPago.solidos_totales}"></td>
+      <td th:text="${planillaPago.variacion_st}"></td>
+      <td th:text="${planillaPago.pago_leche}"></td>
+      <td th:text="${planillaPago.pago_grasa}"></td>
+      <td th:text="${planillaPago.pago_st}"></td>
+      <td th:text="${planillaPago.bono}"></td>
+      <td th:text="${planillaPago.dcto_leche}"></td>
+      <td th:text="${planillaPago.dcto_grasa}"></td>
+      <td th:text="${planillaPago.dcto_st}"></td>
+      <td th:text="${planillaPago.total}"></td>
+      <td th:text="${planillaPago.monto_retencion}"></td>
+      <td th:text="${planillaPago.monto_final}"></td>
     </tr>
     </tbody>
   </table>

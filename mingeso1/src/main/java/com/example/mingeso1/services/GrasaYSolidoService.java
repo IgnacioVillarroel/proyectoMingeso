@@ -1,8 +1,6 @@
 package com.example.mingeso1.services;
 
-import com.example.mingeso1.entities.AcopioLecheEntity;
 import com.example.mingeso1.entities.GrasaYSolidoEntity;
-import com.example.mingeso1.repositories.AcopioLecheRepository;
 import com.example.mingeso1.repositories.GrasaYSolidoRepository;
 import lombok.Generated;
 import org.slf4j.Logger;
@@ -18,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+
 @Service
 public class GrasaYSolidoService {
     @Autowired
@@ -134,4 +133,5 @@ public class GrasaYSolidoService {
             return kilos * 150;
         }
     }
+
 }
