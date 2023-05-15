@@ -6,15 +6,13 @@ import com.example.mingeso1.services.GrasaYSolidoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class GrasaSolidoServiceTest {
-
+public class GrasaYSolidoServiceTest {
     @Autowired
     private GrasaYSolidoRepository grasaSolidoRepository;
 
@@ -134,5 +132,4 @@ class GrasaSolidoServiceTest {
         assertEquals(gs.getGrasa(), gsObtenido.getGrasa(), 0.01);
         assertEquals(gs.getSolido(), gsObtenido.getSolido(), 0.01);
     }
-
 }

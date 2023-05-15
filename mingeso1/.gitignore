@@ -1,8 +1,11 @@
+/data
+jenkins.war
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+sonarqube-10.0.0.68432
 
 ### STS ###
 .apt_generated
