@@ -94,7 +94,6 @@ public class GrasaYSolidoService {
         guardarData(newData);
     }
 
-    //eliminar todos los datos
     public void eliminarGS(){
         grasaSolidoRepository.deleteAll();
     }

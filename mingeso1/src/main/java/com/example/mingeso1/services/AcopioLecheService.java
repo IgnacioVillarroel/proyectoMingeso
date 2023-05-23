@@ -95,7 +95,6 @@ public class AcopioLecheService {
         guardarData(newData);
     }
 
-    //eliminar acopios
     public void eliminarAcopios(){
         acopioLecheRepository.deleteAll();
     }
@@ -124,8 +123,6 @@ public class AcopioLecheService {
             return kilos * 250;
         }
     }
-
-    //calcular cantidad de acopios con un turno por porveedor
     public int cantidadAcopiosPorTurno(String proveedor, String turno){
         int cantidad = acopioLecheRepository.countByProveedorAndTurno(proveedor, turno);
         return cantidad;
@@ -150,7 +147,6 @@ public class AcopioLecheService {
         return Math.max(mañana,tarde);
     }
 
-    //promedio de kls_leche
     public double promedioKls(String proveedor, ArrayList<AcopioLecheEntity> acopios){
         double suma = sumarKls(acopios);
         double cantidad = acopioLecheRepository.countFechaByProveedor(proveedor);

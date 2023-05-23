@@ -19,7 +19,7 @@ public class PagoService {
     public void guardarPago(PagoEntity pago){
         pagoRepository.save(pago);
     }
-    
+
 
     public ArrayList<PagoEntity> obtenerPagosByCodigoProveedor(String codigo_proveedor){
         return pagoRepository.findPagosByCodigoProveedor(codigo_proveedor);
