@@ -12,19 +12,15 @@ public class PagoService {
     @Autowired
     PagoRepository pagoRepository;
 
-    //obtener pagos
+
     public ArrayList<PagoEntity> obtenerPagos(){
         return (ArrayList<PagoEntity>) pagoRepository.findAll();
     }
-
-    //guardar pago
     public void guardarPago(PagoEntity pago){
         pagoRepository.save(pago);
     }
+    
 
-    public void eliminarPagos(){pagoRepository.deleteAll();}
-
-    //obtener pago por codigo_proveedor
     public ArrayList<PagoEntity> obtenerPagosByCodigoProveedor(String codigo_proveedor){
         return pagoRepository.findPagosByCodigoProveedor(codigo_proveedor);
     }
